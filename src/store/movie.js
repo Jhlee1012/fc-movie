@@ -21,7 +21,13 @@ export const searchMoives = async page =>{
     }
 
     try{
-        const res = await fetch(`https://www.omdbapi.com/?apikey=107804be&s=${store.state.searchText}&page=${page}`)
+        const res = await fetch('/api/test',{
+            method:'POST',
+            body: JSON.stringify({
+                title:store.state.searchText,
+                page
+            })
+        })
         const { Search, totalResults, Response, Error } = await res.json()
         if (Response === 'True'){
             store.state.movies = [
@@ -44,7 +50,12 @@ export const searchMoives = async page =>{
 
 export const getMovieDetails = async id => {
     try{
-        const res = await fetch(`https://www.omdbapi.com/?apikey=107804be&i=${id}&plot=full}`)
+        const res = await fetch('api/test',{
+            method:'POST',
+            body: JSON.stringify({
+                id,
+            })
+        })
         store.state.movie = await res.json()
     } catch (err){
         console.log('getMovieDetails error:',err)
